@@ -1,0 +1,34 @@
+baseURL: 'http://gohugo.io/'
+languageCode: 'en-us'
+theme: "rose-pine"
+pagination.pagerSize: 5
+
+permalinks:
+  notes: /note/:year:month:day
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    style: "rose-pine"
+    linenos: true
+    anchorlinenos: true
+    noClasses: false
+
+menu:
+  header:
+  - name: "about"
+    url: "about"
+  - name: "posts"
+    url: "posts"
+  - name: "notes"
+    url: "notes"
+
+params:
+  author: "d0xFF"
+  user: "hello_world"
+  hostname: "rose-pine"
+  social:
+  - name: "github"
+    url: "https://github.com/working-git"

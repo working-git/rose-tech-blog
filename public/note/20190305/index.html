@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>
+Emoji support | d0xFF
+</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="generator" content="Hugo 0.147.2">
+
+
+<link rel="canonical" href="http://localhost:1313/note/20190305/" >
+<link href="/sass/main.min.7b717d09afc95cbb2024b3c24ce8e5ad32541e0cb77effe6a7aae21534367b0d.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="/js/custom-highlight.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="/js/highlight-init.js"></script>
+<script src="/js/highlight-bash-args.js"></script>
+
+</head>
+
+<body>
+    <div class="flexWrapper">
+        <header class="header">
+    <div class="wrapper">
+        <a href="http://localhost:1313/">
+            <span class="terminal">hello_world@rose-pine ~ $</span>
+            <span class="cursor"></span>
+        </a>
+        <div class="menu">
+            <input type="checkbox" class="menu-toggle" id="menu-toggle" />
+            <nav class="menu-items">
+                <ul>
+                    
+                    
+                    <li>
+                     
+                      
+                      
+                        <a href="/about"  title="" >
+                            ~/about</a>
+                    </li>
+                    
+                    <li>
+                     
+                      
+                      
+                        <a href="/note"  title="" >
+                            ~/notes</a>
+                    </li>
+                    
+                    <li>
+                     
+                      
+                      
+                        <a href="/posts"  title="" >
+                            ~/posts</a>
+                    </li>
+                    
+                </ul>
+            </nav>
+            <label for="menu-toggle" class="menu-trigger">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+                </svg>
+            </label>
+        </div>
+    </div>
+</header>
+
+        <div class="content">
+            <main class="main">
+                
+<div class="postWrapper post">
+    <h1>Emoji support</h1>
+    <div class="postMeta">
+        
+        <span>March 5, 2019</span>
+        
+        
+    </div><p>Emoji can be enabled in a Hugo project in a number of ways.</p>
+<p>The <a href="https://gohugo.io/functions/emojify/"><code>emojify</code></a> function can be called directly in templates or <a href="https://gohugo.io/templates/shortcode-templates/#inline-shortcodes">Inline Shortcodes</a>.</p>
+<p>To enable emoji globally, set <code>enableEmoji</code> to <code>true</code> in your site&rsquo;s <a href="https://gohugo.io/getting-started/configuration/">configuration</a> and then you can type emoji shorthand codes directly in content files; e.g.</p>
+<!-- raw HTML omitted -->
+<p>The <a href="http://www.emoji-cheat-sheet.com/">Emoji cheat sheet</a> is a useful reference for emoji shorthand codes.</p>
+<hr>
+<p><strong>N.B.</strong> The above steps enable Unicode Standard emoji characters and sequences in Hugo, however the rendering of these glyphs depends on the browser and the platform. To style the emoji you can either use a third party emoji font or a font stack; e.g.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="1"><a class="lnlinks" href="#1">1</a>
+</span><span class="lnt" id="2"><a class="lnlinks" href="#2">2</a>
+</span><span class="lnt" id="3"><a class="lnlinks" href="#3">3</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">.emoji {
+</span></span><span class="line"><span class="cl">  font-family: Apple Color Emoji, Segoe UI Emoji, NotoColorEmoji, Segoe UI Symbol, Android Emoji, EmojiSymbols;
+</span></span><span class="line"><span class="cl">}</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+
+            </main>
+        </div>
+        <footer class="footer">
+    &copy; 2025 d0xFF, Built with
+    <a href="https://gohugo.io" class="footerLink">Hugo</a> and
+    <a href="https://github.com/akopdev/hugo-theme-rose-pine" class="footerLink">Rose Pine</a> theme
+</footer>
+
+
+    
+    <script src="/js/copy-code.min.js"></script>
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>
+My OSCP Journey (and tips) | d0xFF
+</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="generator" content="Hugo 0.147.2">
+
+
+<link rel="canonical" href="http://localhost:1313/post/oscp-journey/" >
+<link href="/sass/main.min.7b717d09afc95cbb2024b3c24ce8e5ad32541e0cb77effe6a7aae21534367b0d.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="/js/custom-highlight.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="/js/highlight-init.js"></script>
+<script src="/js/highlight-bash-args.js"></script>
+
+</head>
+
+<body>
+    <div class="flexWrapper">
+        <header class="header">
+    <div class="wrapper">
+        <a href="http://localhost:1313/">
+            <span class="terminal">hello_world@rose-pine ~ $</span>
+            <span class="cursor"></span>
+        </a>
+        <div class="menu">
+            <input type="checkbox" class="menu-toggle" id="menu-toggle" />
+            <nav class="menu-items">
+                <ul>
+                    
+                    
+                    <li>
+                     
+                      
+                      
+                        <a href="/about"  title="" >
+                            ~/about</a>
+                    </li>
+                    
+                    <li>
+                     
+                      
+                      
+                        <a href="/notes"  title="" >
+                            ~/notes</a>
+                    </li>
+                    
+                    <li>
+                     
+                      
+                      
+                        <a href="/posts"  title="" >
+                            ~/posts</a>
+                    </li>
+                    
+                </ul>
+            </nav>
+            <label for="menu-toggle" class="menu-trigger">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+                </svg>
+            </label>
+        </div>
+    </div>
+</header>
+
+        <div class="content">
+            <main class="main">
+                
+<div class="postWrapper post">
+    <h1>My OSCP Journey (and tips)</h1>
+    <div class="postMeta">
+        
+        <span>May 25, 2025</span>
+        
+        
+    </div><h1 id="the-journey-of-1000-steps">The Journey of 1000 Steps</h1>
+<ul>
+<li><a href="#the-journey-of-1000-steps">The Journey of 1000 Steps</a>
+<ul>
+<li><a href="#the-beginning-">The Beginning </a></li>
+<li><a href="#initial-plan">Initial Plan</a></li>
+<li><a href="#game-time">Game Time</a></li>
+<li><a href="#preparation">Preparation</a></li>
+<li><a href="#exam-day">Exam Day</a>
+<ul>
+<li><a href="#the-plan">The Plan</a></li>
+<li><a href="#active-directory">Active Directory</a>
+<ul>
+<li><a href="#1300---exam-start">13:00 - Exam Start</a></li>
+<li><a href="#1550---flag-number-two">15:50 - Flag number two</a></li>
+<li><a href="#1600---active-directory-owned">16:00 - Active Directory Owned</a></li>
+</ul>
+</li>
+<li><a href="#stand-alones">Stand Alones</a>
+<ul>
+<li><a href="#1630---machine-a---user-flag">16:30 - Machine A - User Flag</a></li>
+<li><a href="#1800---machine-a---rootadmin-flag">18:00 - Machine A - Root/Admin Flag</a></li>
+<li><a href="#2000-machine-b---user-flag">20:00 Machine B - User flag</a></li>
+<li><a href="#2045-information-gathering">20:45 Information Gathering</a></li>
+<li><a href="#2130-machine-b---rootadmin-flag">21:30 Machine B - Root/Admin Flag</a></li>
+<li><a href="#0030-machine-c---user-flag">00:30 Machine C - User Flag</a></li>
+<li><a href="#0430-machine-c---defeat">04:30 Machine C - Defeat</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#report-writing">Report Writing</a></li>
+<li><a href="#thoughts-and-words-of-advice">Thoughts and Words of Advice</a>
+<ul>
+<li><a href="#thoughts">Thoughts</a></li>
+<li><a href="#advice">Advice</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="the-beginning"><span class="rp-rose">The Beginning </span></h2>
+<p>I originally received a LearnOne subscription in January 2022, however due to life circumstances at the time, it went largely unused.</p>
+<p>I lucked out, and my employer had an extra voucher laying around in May of last year. I was determined that this time, I would at the minimum take the test both times regardless of how prepared I felt.</p>
+<h2 id="initial-plan">Initial Plan</h2>
+<p>My plan was simple, use the first two months to get through all the content, and then use the remaining time going through the challenge labs and additional boxes.</p>
+<blockquote>
+<p>&ldquo;No plan survives first contact with the enemy&rdquo;</p></blockquote>
+<p>I started out strong, but as my workload increased, the time I spent on OSCP went down drastically. When the changes from OSCP to OSCP+ were announced, I was nowhere near ready to actually pass the exam.</p>
+<p>I considered just yolo&rsquo;ing it, and attempting the exam (I mean I get two right&hellip;), but it felt like a waste with a close to 0% chance of passing. Instead I decided to wait. And wait. And keep waiting.</p>
+<p>I slowly made my way through the main challenge labs, (OSCP A-C). I dabbled with the other labs, but didn&rsquo;t get anywhere near completing them.</p>
+<p>Out of the blue I get an email saying my LearnOne subscription will expire in 30 days.</p>
+<h2 id="game-time">Game Time</h2>
+<p>I have 30 days to take my exam, but I also have a vacation planned thta will take up 16 of those 30 days. So I&rsquo;m really working with two weeks. It was time to enter crunch mode.</p>
+<p>The test had switched to assumed breach, so I did the new challenge labs that were also assumed breach. Once I was done with those, I evaluated myself on the areas where I thought I was weak and tackled boxes from Lain&rsquo;s list that would help.</p>
+<p>In my opinion, OSCP level Active Directory is much more about enumeration, than it is tricky exploitation. In the challenge labs, all the intended paths were pretty simple in execution. The AD felt more like a CTF, looking for the breadcrumb that will show you the path to the next box.</p>
+<p>I went ahead and scheduled my exam for the weekend right before my vacation. I was either going to have an extra reason to celebrate, or something else to forget. But at least it would be over.</p>
+<h2 id="preparation">Preparation</h2>
+<p>Online I saw a lot of people recommending various things to take notes or copy commands. People were using Obsidian, Cherry Tree, Notion, etc. Coming from a more Linux heavy background (I use arch btw), I vastly prefer a flat text file and using vim.</p>
+<p>I created two files, one for notes about each box. This file had sections for credentials found, scan results, and a general notes section. Having a system in place to keep track of all the information as you find it, is tremendously helpful. A piece of information you find at the start may not be immediately useful, but could end up being the key piece to a privesc.</p>
+<p>The second file, was my commands/notes file. This was broken into sections for Scanning, Initial Enumeration, PrivEsc Vectors, AD Enumeration. At the top of the file, I had some highlights for things I missed in the challenge labs, that way every time I looked at the file, I was reminded of those things. I did not want to miss something I had missed before, like trying different casing for credentials.</p>
+<p>The majority of the file, would be commands, with variables in place of the options. An example follows.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-0-1"><a class="lnlinks" href="#hl-0-1">1</a>
+</span><span class="lnt" id="hl-0-2"><a class="lnlinks" href="#hl-0-2">2</a>
+</span><span class="lnt" id="hl-0-3"><a class="lnlinks" href="#hl-0-3">3</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nxc smb <span class="nv">$target_ip</span> --shares
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;test&#34;</span>
+</span></span><span class="line"><span class="cl">ftp anonymous@<span class="nv">$target_ip</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><span class="rp-rose">Rose text</span></p>
+<p><span class="rp-foam">Foam text</span></p>
+<p><span class="rp-gold">Gold text</span></p>
+<p>I also made a few scripts to help me save time, and mental load during the exam. I think the most useful thing, is to practice with all the tools you intend to use. You don&rsquo;t want to waste precious mental resources on how to run a command during the exam.</p>
+<p>For example, I made a simple script named <a href="https://github.com/working-git/random-tools/blob/main/tool-upload.py">tools-upload</a>. It <em>shocker</em> is a wrapper to upload tools to the target box.</p>
+<!-- Put screenshot of tools-upload here -->
+<p>Now instead of trying to type out an IWR command, I can just copy the line for the file I want, and paste it on the target machine.</p>
+<p>I&rsquo;d also recommend having commands ready for your proofs of the machines. That way you just copy and paste the applicable line to the machine and take your screenshot. Again, don&rsquo;t want to waste mental capacity worrying if you have the correct information in your screenshot.</p>
+<h2 id="exam-day">Exam Day</h2>
+<h3 id="the-plan">The Plan</h3>
+<p>My plan going in, was to start with AD, and then move to the stand-alones. It&rsquo;s impossible to pass without AD, so I figured it was better to get it out of the way.</p>
+<h3 id="active-directory">Active Directory</h3>
+<p>I scheduled my exam to start close to when I would normally start work. I&rsquo;ve seen advice on different start times, I would say to stick to what you know. If you work 4pm to 12am, you should heavily consider starting your exam at 4pm.</p>
+<p>Before my exam started, I made a snapshot of my VM, just in case anything went wrong during the exam.</p>
+<p>Check-in went smoothly, and my heart started to beat faster and faster as the thoughts of failure raced through my mind.</p>
+<h4 id="1300---exam-start">13:00 - Exam Start</h4>
+<p>I start on the AD with some enumeration, and manage to get the first flag in 40 minutes. Off to a great start, this helped ease some of the nerves.</p>
+<h4 id="1550---flag-number-two">15:50 - Flag number two</h4>
+<p>Able to pivot and get a shell on the second box in the set. I ran into a roadblock, and spent an unfortunate amount of time troubleshooting an issue. (Have a troubleshooting process) I figured out my issue, and got my second flag XX minutes in. Only the DC remained, and I already saw my path to it.</p>
+<h4 id="1600---active-directory-owned">16:00 - Active Directory Owned</h4>
+<p>After I got through the hurdles on the second box, I was almost immediately on the DC. Like I said earlier, sometimes a piece of information you find isn&rsquo;t immediately actionable, but could be the key later.</p>
+<h3 id="stand-alones">Stand Alones</h3>
+<p>Once I finished up with the AD set, I took a small break to eat and reset mentally.</p>
+<p>I came back, sat down, and put on &ldquo;Severance &ndash; Music to Refine To&rdquo;. I started my scans of all three machines, hoping for an easy win.</p>
+<h4 id="1630---machine-a---user-flag">16:30 - Machine A - User Flag</h4>
+<p>Much to my surprise, one of the machines has some low hanging fruit that gives me a shell. One more flag, and now I&rsquo;m two flags away from hitting that magical number.</p>
+<h4 id="1800---machine-a---rootadmin-flag">18:00 - Machine A - Root/Admin Flag</h4>
+<p>During my enumeration I noticed something odd, I was sure it was the intended privesc, but I had no idea how to use it. After a literal <em>hour</em> of googling, I stumbled upon an article detailing how to abuse what I saw. With this knowledge in hand, it was relatively simple to privesc, and I had another flag in my belt.</p>
+<blockquote>
+<p>One more flag, one more.</p></blockquote>
+<p>The only thing in my head was getting one more flag. I took one more break, feeling confident that I was going to pass.</p>
+<p>I felt like I was banging my head against a wall. I thought I <em>knew</em> the path to user for both Machine B and C, but I wasn&rsquo;t having any luck. I tried variations of the techniques I was using, and finally&hellip;</p>
+<h4 id="2000-machine-b---user-flag">20:00 Machine B - User flag</h4>
+<p>After a lot of floundering, I finally manage to get a foothold on Machine B. And with that foothold, my final flag needed to pass. I let out a sigh and I felt all my tension leave my body. I took a break to try and give my brain a rest.</p>
+<h4 id="2045-information-gathering">20:45 Information Gathering</h4>
+<p>While everything was fresh, I went through the steps to exploit the boxes I had completed so far. I made sure to capture screenshots and jot down notes along the way. Getting 70 points doesn&rsquo;t matter if your report isn&rsquo;t deemed to be enough, so I focused on getting everything I would need together. I thought about calling it quits, but I told myself I&rsquo;d go for one more hour.</p>
+<h4 id="2130-machine-b---rootadmin-flag">21:30 Machine B - Root/Admin Flag</h4>
+<p>I run through more enumeration and finally stumble upon the privesc. Right before my self-imposed cutoff time I got another flag. Stopping at 70 was acceptable, stopping at 80? Might as well keep going.</p>
+<h4 id="0030-machine-c---user-flag">00:30 Machine C - User Flag</h4>
+<p>I <em>knew</em> the path to getting a user foothold, but implementing it was very difficult for me. After many hours of trying, failing, trying, failing, and trying some more. I finally got the initial foothold. I screamed so loud, I wouldn&rsquo;t be surprised if I jump scared the proctors. I made it to 90 points, the mythical triple digits was in reach. I could do this.</p>
+<h4 id="0430-machine-c---defeat">04:30 Machine C - Defeat</h4>
+<p>Turns out&hellip; I couldn&rsquo;t do it.</p>
+<p>After hours and hours of enumeration, I was lost for the final privesc. It had been 12 hours since I started the exam, so I decided to call it quits. I had work the next day, and a report to write. I needed all the extra time I could get.</p>
+<p>I took my last screenshots, verified that my proofs had all the correct information. And finally I checked out with the proctors.</p>
+<h2 id="report-writing">Report Writing</h2>
+<p>OffSec provides a word doc template to generate the report, but I wanted to try a solution that could be helpful going forward. I decided to host SysReptor on an Ubuntu VM, and I&rsquo;d easily recommend it for anyone goind down this path. It comes with some helpful command line utilities, like being able to convert your nmap output to something more report friendly.</p>
+<p>It took me about four hours, to draft the report and verify I wasn&rsquo;t missing any important (read: required) information.</p>
+<h2 id="thoughts-and-words-of-advice">Thoughts and Words of Advice</h2>
+<h3 id="thoughts">Thoughts</h3>
+<p>Do I recommend taking OSCP?</p>
+<p>Yes*</p>
+<p>I think the material and the labs are pretty valuable. However, this comes at a pretty steep asking price. If your employer is able to purchase a voucher, or you <em>need</em> it for a job, I can recommend it.</p>
+<p>If it&rsquo;s coming out of your own pocket, that&rsquo;s a lot harder. Nothing in the course material can&rsquo;t be found elsewhere. For some of the topics, I even prefer other learning resources. However, I will say the Challenge Labs provided, and the exam itself, feels less like a CTF than other options.</p>
+<h3 id="advice">Advice</h3>
+<p>The single most helpful piece of advice I read during my journey was simple. If (read: when) you get stuck and need to look at a write-up or get a hint. Add whatever you got stuck on to your notes. I prefer brevity and conciseness, so at the top of my command reference file I had a bunch of notes that were useful to me.</p>
+<!-- Screen shot of command file -->
+
+</div>
+
+            </main>
+        </div>
+        <footer class="footer">
+    &copy; 2025 d0xFF, Built with
+    <a href="https://gohugo.io" class="footerLink">Hugo</a> and
+    <a href="https://github.com/akopdev/hugo-theme-rose-pine" class="footerLink">Rose Pine</a> theme
+</footer>
+
+
+    
+    <script src="/js/copy-code.min.js"></script>
+
+
+    </div>
+</body>
+</html>

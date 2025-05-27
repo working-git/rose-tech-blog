@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TJNull on </title>
+    <link>http://localhost:1313/tags/tjnull/</link>
+    <description>Recent content in TJNull on </description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 25 May 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/tjnull/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My OSCP Journey (and tips)</title>
+      <link>http://localhost:1313/post/oscp-journey/</link>
+      <pubDate>Sun, 25 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/oscp-journey/</guid>
+      <description>&lt;h1 id=&#34;the-journey-of-1000-steps&#34;&gt;The Journey of 1000 Steps&lt;/h1&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#the-journey-of-1000-steps&#34;&gt;The Journey of 1000 Steps&lt;/a&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#the-beginning&#34;&gt;The Beginning&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#initial-plan&#34;&gt;Initial Plan&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#game-time&#34;&gt;Game Time&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#preparation&#34;&gt;Preparation&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#exam-day&#34;&gt;Exam Day&lt;/a&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#the-plan&#34;&gt;The Plan&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#active-directory&#34;&gt;Active Directory&lt;/a&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#1300---exam-start&#34;&gt;13:00 - Exam Start&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#1545---flag-number-two&#34;&gt;15:45 - Flag number two&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#1600---active-directory-owned&#34;&gt;16:00 - Active Directory Owned&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#stand-alones&#34;&gt;Stand Alones&lt;/a&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#1630---machine-a---user-flag&#34;&gt;16:30 - Machine A - User Flag&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#1730---machine-a---rootadmin-flag&#34;&gt;17:30 - Machine A - Root/Admin Flag&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#2000-machine-b---user-flag&#34;&gt;20:00 Machine B - User flag&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#2045-information-gathering&#34;&gt;20:45 Information Gathering&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#2130-machine-b---rootadmin-flag&#34;&gt;21:30 Machine B - Root/Admin Flag&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#0030-machine-c---user-flag&#34;&gt;00:30 Machine C - User Flag&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#0430-machine-c---defeat&#34;&gt;04:30 Machine C - Defeat&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#report-writing&#34;&gt;Report Writing&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#thoughts-and-words-of-advice&#34;&gt;Thoughts and Words of Advice&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;the-beginning&#34;&gt;The Beginning&lt;/h2&gt;&#xA;&lt;p&gt;I originally received a LearnOne subscription in January 2022, however due to life circumstances at the time, it went largely unused.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

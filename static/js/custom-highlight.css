@@ -1,0 +1,73 @@
+/* Custom code block styles for rounded edges and argument highlighting */
+
+pre, pre code, .chroma, .highlight {
+  border-radius: 1rem !important;
+  background: rgba(31, 29, 46, 0.6) !important; /* 60% transparent, matches your theme's code bg */
+}
+
+/* Highlight.js: highlight command arguments in bash code blocks */
+/* This targets arguments (words starting with - or --) in bash blocks */
+.hljs-language-bash .hljs-attr,
+.hljs-language-bash .hljs-params,
+.hljs-language-bash .hljs-variable,
+.hljs-language-bash .hljs-built_in {
+  color: #f6c177 !important;
+  font-weight: bold;
+}
+
+/* Set Bash builtins to #eb6f92 for all code blocks */
+.hljs-built_in {
+  color: #eb6f92 !important;
+}
+
+/* Optionally, make all options (e.g. -l, --help) stand out */
+.hljs-language-bash .hljs-literal {
+  color: #eb6f92 !important;
+  font-style: italic;
+}
+
+/* Style for the first non-builtin command on a line in bash code blocks */
+.hljs-command {
+  color: #c4a7e7 !important;
+  font-weight: bold;
+}
+
+.hljs-arg {
+  color: #ffb6d9 !important; /* light pink */
+  font-weight: bold;
+  background: none !important;
+  border-radius: 0.3em;
+  padding: 0 0.2em;
+}
+
+.chroma .lnt, .chroma .ln, .highlight .lnt, .highlight .ln {
+  background: transparent !important;
+}
+
+.hljs-string, .hljs-quote {
+  color: #f6c177 !important;
+}
+
+.hljs-variable {
+  color: #ea9a97 !important;
+}
+
+/* Rose Pine color utility classes */
+.rp-rose, .postWrapper .rp-rose, .content .rp-rose { color: #eb6f92 !important; }
+.rp-foam, .postWrapper .rp-foam, .content .rp-foam { color: #9ccfd8 !important; }
+.rp-gold, .postWrapper .rp-gold, .content .rp-gold { color: #f6c177 !important; }
+.rp-pine, .postWrapper .rp-pine, .content .rp-pine { color: #31748f !important; }
+.rp-iris, .postWrapper .rp-iris, .content .rp-iris { color: #c4a7e7 !important; }
+.rp-love, .postWrapper .rp-love, .content .rp-love { color: #eb6f92 !important; }
+.rp-muted, .postWrapper .rp-muted, .content .rp-muted { color: #6e6a86 !important; }
+.rp-subtle, .postWrapper .rp-subtle, .content .rp-subtle { color: #908caa !important; }
+.rp-text, .postWrapper .rp-text, .content .rp-text { color: #e0def4 !important; }
+.rp-highlight, .postWrapper .rp-highlight, .content .rp-highlight { color: #ea9a97 !important; }
+.rp-surface, .postWrapper .rp-surface, .content .rp-surface { color: #232136 !important; }
+.rp-base, .postWrapper .rp-base, .content .rp-base { color: #1f1d2e !important; }
+.rp-overlay, .postWrapper .rp-overlay, .content .rp-overlay { color: #26233a !important; }
+.rp-lowlight, .postWrapper .rp-lowlight, .content .rp-lowlight { color: #2a273f !important; }
+.rp-highlight-low { color: #2a283e !important; }
+.rp-highlight-med { color: #44415a !important; }
+.rp-highlight-high { color: #56526e !important; }
+.rp-none { color: #00000000 !important; }
