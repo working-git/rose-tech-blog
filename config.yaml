@@ -26,9 +26,9 @@ menu:
     url: "notes"
 
 params:
-  author: "d0xFF"
-  user: "hello_world"
-  hostname: "rose-pine"
+  author: "darksnowfall"
+  user: "darksnowfall"
+  hostname: "rose-blog"
   social:
   - name: "github"
-    url: "https://github.com/working-git"
+    url: "https://github.com/DarkSnowfall"

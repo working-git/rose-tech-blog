@@ -1,9 +1,9 @@
 +++
 title = "whoami"
 description = "soho vibe pentester and cybersecurity professional"
-date = "2019-02-28"
+date = "2025-07-12"
 aliases = ["about-us", "about-me", "contact"]
-author = "d0xFF"
+author = "DarkSnowfall"
 +++
 
 Self-proclaimed cybersecurity enthusiast, trying to get smarter every day.
