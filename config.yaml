@@ -1,4 +1,4 @@
-baseURL: 'http://gohugo.io/'
+baseURL: ''
 languageCode: 'en-us'
 theme: "rose-pine"
 pagination.pagerSize: 5

