@@ -4,7 +4,6 @@ tags = ["OSCP", "exam", "TJNull", "Lain"]
 date = "2025-09-18"
 +++
 
-
 # My Methodology
 
 1. Start scan of all tcp ports

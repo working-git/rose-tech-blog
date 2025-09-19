@@ -2,7 +2,7 @@
 title = "OSCP tips, commands, and random things"
 tags = ["OSCP", "exam", "TJNull", "Lain"]
 date = "2025-05-25"
-draft: true
+draft = true
 +++
 
 # Methodology
