@@ -6,4 +6,4 @@ aliases = ["about-us", "about-me", "contact"]
 author = "DarkSnowfall"
 +++
 
-Self-proclaimed cybersecurity enthusiast, trying to get smarter every day.
+Self-proclaimed cybersecurity enthusiast, trying (and failing) to get smarter every day.

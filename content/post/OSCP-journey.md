@@ -1,10 +1,8 @@
-Test
-
-
 +++
 title = "My OSCP Journey (and tips)"
 tags = ["OSCP", "exam", "TJNull", "Lain"]
 date = "2025-05-25"
+draft: true
 +++
 
 
