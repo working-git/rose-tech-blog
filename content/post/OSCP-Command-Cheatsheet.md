@@ -2,7 +2,6 @@
 title = "OSCP Command Cheatsheet"
 tags = ["OSCP", "exam", "TJNull", "Lain"]
 date = "2025-09-18"
-draft: true
 +++
 
 
